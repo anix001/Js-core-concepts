@@ -10,7 +10,7 @@
     ## class Component
        React Class Components are JavaScript classes that extend React.Component. They define the UI, manage state, and handle events within your application.
         
-       @@@
+       ```
        import React from "react";
 
         class App extends React.Component {
@@ -20,7 +20,21 @@
         }
 
         export default App;
-        @@@
+        ```
         
     ## Functional Component
       Functional component is just a simple javascript function; it accepts the data in the form of props and returns the react element. (The React Element is a small piece of code representing a part of the User Interface in a React Application. Every React element is a JavaScript Object at the end. It is a plain JavaScript object that represents a virtual representation of a DOM element)
+
+      ```
+        Import React from 'react';
+        import Video from "./components/Video";
+        import './App.css'; 
+        function App() {
+        return (
+            <div className="App">
+            <Video />
+            </div>
+        );
+        }
+        export default App;
+    ```
