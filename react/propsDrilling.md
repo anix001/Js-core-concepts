@@ -1,0 +1,2 @@
+
+Props drilling is a concept in React (or similar component-based frameworks) where you need to pass data (props) from a parent component down to deeply nested child components through several intermediary components. Each component in the hierarchy must explicitly pass the props to its child, even if the intermediary components don't actually need to use the data themselves.
