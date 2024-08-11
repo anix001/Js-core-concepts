@@ -206,3 +206,12 @@ const [a, b,c] = fruits;
  //Accessing length property of html collection
  console.log(boxes.length); 
  ```
+
+## while vs do-while
+  While loop executes a block of code while a certain condition is true.
+
+  The do-while loop is similar to  while loop, except that the block of code is **executed at least once**, even if the condition is false.
+
+## break vs continue
+The break statement is used to terminate the loop.
+The continue statement is used to **skip the current iteration** of the loop and move on to the next iteration.
