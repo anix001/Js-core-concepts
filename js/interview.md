@@ -215,3 +215,20 @@ const [a, b,c] = fruits;
 ## break vs continue
 The break statement is used to terminate the loop.
 The continue statement is used to **skip the current iteration** of the loop and move on to the next iteration.
+
+## for vs for..of
+for loop is slightly more complex having more lines of code whereas for...of is much simpler and better for iterating arrays.
+
+```typescript
+let arrv=[1,2,3];
+
+//for loop
+for(let i=0; i<arr.lrngth; i++){
+    console.log(arr[i]);
+}
+
+//for...of
+for(let val of arr){
+    console.log(val)
+}
+```
