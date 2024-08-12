@@ -452,3 +452,61 @@ function addToTotal(val){
 console.log(1); //1
 console.log(1); //2
 ```
+
+## callback function
+A callback function is a function that is passed as an argument to another function.
+
+```typescript
+ function add(x,y){
+    return x +y ;
+ }
+
+ function display(x, y, func){
+    var result = func(x,y);
+    console.log(result);
+ }
+ display(1,2, add);
+ ```
+
+ ## string immutability 
+ String in js are considered immutable because you cannot modify the contents of an existing string directly.
+
+ ## finally block
+ Finally, block is used to execute some code irrespective of error.
+
+ ## Throw Statement
+ The throw statement stops the execution of the current function and passes the error to the catch block of calling function.
+
+ ## Error propagation
+ Error propagation refers to the process of passing or propagating an error from one part of code to another by using the throw statement with try catch.
+
+## Array vs Objects
+Array are collection of values.
+Objects are collection of key-value pairs.
+
+## deep copy vs shallow copy
+Shallow copy in nested object case will modify the parent object property value, if cloned object property value is  changed. But deep copy will not modify the parent object property value.
+
+## Set Object 
+The set object is a collection of unique values,meaning that duplicate values are not allowed.
+
+```typescript
+const a= new Set();
+a.add(1);
+```
+
+## Map Object
+The Map object is a collection of key-value pairs where each key can be any type and each value can also b3 of any type.
+
+```typescript
+const a= new Map();
+a.set('aa', );
+```
+
+## Events
+Events are actions that happen in the browserx such as button click, mousemovement, or keyboard input.
+
+## Event Object
+Whenever any event is triggred, the browser automatically creates an event object and passed it as an argument to the event handler function.
+
+The event object contains various properties and method s taht provide informationa about the event, such as the type of event, the element that triggred the event, etc.
