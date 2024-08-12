@@ -232,3 +232,223 @@ for(let val of arr){
     console.log(val)
 }
 ```
+
+## for...of vs for...in
+
+for...of loop is used to loop through the values of an object like arrays, strings. It allows you to access each value directly, without having to use an index.
+
+```typescript
+//for...of
+for(let val of arr){
+    console.log(val)
+}
+```
+
+for...in loop is used to loop through the properties of an object. It allows you to iterate **over the keys of an object** and access the values associated by using keys as the index.
+
+```typescript
+const person={
+    name:'Happy',
+    role:'Devops'
+};
+
+for(let key in person){
+    console.log(person[key]);
+}
+```
+
+## named vs anonymous function
+
+Named functions have a name identifier.
+
+```typescript
+
+//funtion declaration
+
+function sum(a,b){
+    return a + b;
+};
+
+console.log(add(5,3));
+```
+
+Anonymous functions **do not have a name identifier** and cannot be referenced directly by name.
+
+```typescript
+
+//anonymous function
+
+console.log(function(a,b){
+ return a*b;
+}(4,5));
+```
+
+
+## High order function
+A high order function:
+1. Take one or more functions as arguments(callback function) OR
+2. Return a function as a result
+
+```typescript
+//Take one or more functions
+//as arguments
+
+function hof(func){
+    func();
+}
+
+hof(sayHello);
+
+funcion sayHello(){
+    console.log("Hello");
+}
+
+//output hello
+```
+
+
+## arguments vs parameters
+
+Parameters are the placeholders defined in the function declaration.
+
+```typescript
+
+//a and b are parameters
+
+function add(a, b){
+    console.log(a + b)
+};
+```
+
+Arguments are the actual values passed to a function when it is invoked or called.
+
+```typescript
+add(3,4);
+```
+
+## default parameters
+In js, default parameters allow you to specify default values for function parameters.
+
+```typescript
+//function with default parameter value
+
+function greet(name="Happy"){
+    console.log("Hello "+ name +"!!");
+}
+
+greet();
+```
+
+
+## First-class function
+A programming languange is said to have First-class function if function in that language are treated like other variable.
+
+1. Assignable
+
+```typescript
+// Assgning function like a variable
+const myFunction = function(){
+    console.log("hello world");
+};
+
+myFunction();
+```
+
+2. Passable as Arguments
+
+```typescript
+function double(number){
+    return number * 2;
+}
+
+//passing function as an argument like a variable
+function performOperation(double, value){
+    return double(value);
+}
+
+console.log(performOperation(double, 5)); //10
+```
+
+3. Returanable as Values
+```typescript
+// A function thet returns another function
+
+function a(){
+    return function(){
+        console.log("a");
+    }
+};
+
+const b = a();
+b();
+```
+
+## Currying
+
+Currying in js transforms a function with multiple arguments into a nested series of functions, each taking a single arguments.
+
+```typescript
+
+//without currying
+function multiply(a,b){
+    retrurn a*b;
+}
+
+//curried version 
+function currying(a){
+    return function(b){
+        return a * b;
+    }
+}
+const a = currying(5);
+console.log(a(6));
+```
+
+## Function Expression
+
+A function expression is a way to define a function by assigning it to a variable.
+
+```typescript
+//Anonymous Function Experssion
+
+const add = function(a,b){
+    return a + b;
+};
+
+console.log(add(5,3)); // 8
+
+//named function expression
+
+const add = function sum(a,b){
+    return a + b;
+};
+
+console.log(add(5,3)); //8
+```
+
+
+## pure vs impure function
+
+A pure function is a function that is always produce the same output for the same output.
+
+```typescript
+function add(a,b){
+    return a + b;
+}
+
+add(5,3);//8
+
+add(5,3);//8
+```
+An impure function, can produce diffrent outputs for the same input.
+
+```typescript
+let total = 0;
+function addToTotal(val){
+    total +=val;
+    return total;
+}
+
+console.log(1); //1
+console.log(1); //2
+```
