@@ -504,9 +504,107 @@ a.set('aa', );
 ```
 
 ## Events
-Events are actions that happen in the browserx such as button click, mousemovement, or keyboard input.
+Events are actions that happen in the browsers such as button click, mousemovement, or keyboard input.
 
 ## Event Object
 Whenever any event is triggred, the browser automatically creates an event object and passed it as an argument to the event handler function.
 
-The event object contains various properties and method s taht provide informationa about the event, such as the type of event, the element that triggred the event, etc.
+The event object contains various properties and methods that provide informationa about the event, such as the type of event, the element that triggred the event, etc.
+
+## Event Delegation
+Event delegation in js is a technique where you attach a **single event handler to a parent element** to handle events on its **child elements**.
+
+```typescript
+<ul id="a">
+<li>list 1</li>
+<li>list 2</li>
+<li>list 3</li>
+</ul>
+
+var parentList = doxument.getElementById("a");
+
+//Attach event handler to parent element
+parentList.addEventListener("click", handleItemClick);
+
+//Event handler function
+function handleItemClick(event){
+    var target = event.target;
+    console.log("clicked", target.textContent)
+}
+```
+
+## Event Bubbling
+
+Event bubbling is the process in js where an **event triggres on a child element propagates up the DOM tree**, triggring handlers on its parent elements.
+
+```typescript
+<div id="outer">
+   <div id="inner">
+     <button id="myButton">Click me</button>
+   </div>
+</div>
+
+//Get the refrence of elements
+var outer = document.getElementById("outer");
+var inner = document.getElementById("inner");
+var button = document.getElementById("myButton");
+
+//Attach event handlers with elements
+outer.addEventListerner("click", handleBubbling);
+inner.addEventListerner("click", handleBubbling);
+button.addEventListerner("click", handleBubbling);
+
+function handleBubbing(event){
+    console.log("Bubbling", this.id);
+}
+```
+## Event Capturing
+Event Capturing is the process in js where an event is handled starting from the highest-level ancestor(the root of the DOM tree) and **moving down to the target element**.
+
+```typescript
+<div id="outer">
+   <div id="inner">
+     <button id="myButton">Click me</button>
+   </div>
+</div>
+
+//Get the refrence of elements
+var outer = document.getElementById("outer");
+var inner = document.getElementById("inner");
+var button = document.getElementById("myButton");
+
+//Attach event handlers with elements
+outer.addEventListerner("click", handleBubbling, true);
+inner.addEventListerner("click", handleBubbling, true);
+button.addEventListerner("click", handleBubbling, true);
+
+function handleBubbing(event){
+    console.log("Bubbling", this.id);
+}
+```
+
+## this keyword
+ this keyword refers to the element that  the event handler is attached to.
+
+ ```typescript
+     <button id="myButton">Click me</button>
+     var button = document.getElementById("myButton");
+button.addEventListerner("click", handleBubbling);
+function handleBubbing(event){
+    console.log("Bubbling", this.id);
+}
+```
+
+## Lexical Scoping
+The concept of lexical scoping ensures that variables declared in an outer scope are accessible in nested functions.
+
+```typescript
+const a =()=>{
+    const b = "aaa";
+    func d(){
+        console.log(b);
+    }
+    d();
+}
+a();
+```
