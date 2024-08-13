@@ -608,3 +608,200 @@ const a =()=>{
 }
 a();
 ```
+
+## Closure
+A closure in js is a **combination of a function and the lexical environment**.
+
+```typescript
+function outerFunction(){
+    const outerVariable = "Outer scope";
+
+    function innerFunction(){
+        console.log(outerVariable);
+    }
+
+    return innerFunction;
+}
+
+const closure = outerFunction();
+```
+
+## Acheiving asynchronous operation in js
+1.  setTimeOut
+2. setinterval
+3. Callbacks
+4. Promises
+5. Async/await
+6. Generators with yield
+7. Event-driven programming
+
+## setTimeout()
+setTimeout() is a built-in js function that allows you to **schedule the execution of a function** after **a specified delay asynchronously**.
+
+
+```typescript
+console.log("start");
+
+// anonymous function as callback
+setTimeout(function(){
+ console.log("I am not stopping anything");
+},3000);
+
+console.log("Not blocked");
+
+
+//output
+//start
+//not blocked
+//I am not stopping anything
+```
+
+## setInterval
+setInterval() is a built-in js function that allows you to **repeatedly a function at a apecified interval asynchronously**.
+
+```typescript
+console.log("start");
+
+// anonymous function as callback
+setInterval(function(){
+ console.log("I am not stopping anything");
+},3000); //repeat after every 3 second
+
+console.log("Not blocked");
+
+
+//output
+//start
+//not blocked
+//I am not stopping anything
+//I am not stopping anything
+.....
+```
+
+## async/await keyword
+The async Keyword is used to define a function as an asynchronous function, which means the coe inside async function will not block the execution  of other code.
+
+```typescript
+function delay(ms){
+ return new promise((resolve)=>
+ setTimeout(()=>{
+    console.log("Running");
+    resolve();
+ },ms)
+ )
+}
+
+
+async function greet(){
+    console.log("Starting....");
+
+    delay(2000); //not block
+    console.log("Not Blocked");
+
+    await delay(1000); // Block the code untill complete
+    console.log("Blocked");
+}
+
+greet();
+
+//Output:
+//Starting
+//not blocked
+//Running (after 1 sec)
+//Blocked
+//Running (after 2 sec)
+```
+
+## Browser APIs in js
+Browser APIs(Application programming interfaces) in js are a **collection of built-in interfaces and methods** provided by web browsers.
+
+```typescript
+1. DOM API (getElementById, querySelector, createElement, appendChild, addEventistener)
+2. XMLHttpRequest(XHR)(open(), send(), setRequestHeader(),onreadyStateChange state)
+3. Fetch API(fetch(), then(), json(), and headers.get())
+4. storage API(localStorage, sessionStorage)
+5. Histpry API(pushState, replaceState, go, back)
+6. GeoLocation API(getCurrentPosition, watchPosition, and clearWatch())
+7. Notification API(Notification.requestPermission(), new Notification(), notification.onclick())
+8. Canvas API(getContext(), fillRect(), drawImage(), beginPath())
+9. Audio and video tags(HTMLMediaElement(audio and video elements), play(), pause(), currentTime(), Volume())
+```
+
+## web Storage
+The Web storage is used to store data locally within browser.
+Local Storage, Session Storage
+
+
+## Local Storage
+LocalStorage is a web storage feature provided by web browsers that allows web application to store key-value pairs of data locally on the user's device.
+
+```typescript
+//storing data in localStorage
+localStorage.setItem('key', 'value');
+//Retrive
+const val = localStorage.getItem("key");
+
+// remove from localStorage  single item
+localStorage.removeItem("key");
+//clear all
+localStorage.clear();
+```
+
+
+## Cookies
+Cookies are small piece of adata taht are stored in the user's web browser.
+
+```typescript
+document.cookie= "cookieName1=cookieValue1";
+document.cookie= "cookieName2=cookieValue2";
+
+const cookieVal = getCookie("cookieName1");
+
+function getCookie(cookieName){
+    const cookies = document.cookie.split(";");
+    for(let i=0; i< cookies.length; i++){
+      const cookie = cookies[i].split("=");
+      if(cookie[0]=== cookieName){
+        retrun cookie[1]
+      }
+    }
+    return "";
+}
+```
+
+## classes in js
+Classes serve as  blueprint for creating objects and define their structire and behaviour.
+
+```typescript
+class Car {
+  constructor(name, year) {
+    this.name = name;
+    this.year = year;
+  }
+}
+
+const myCar1 = new Car("Ford", 2014);
+const myCar2 = new Car("Audi", 2019);
+
+```
+
+## Constructor
+Constructors are special methods within classes that are automatically called when an object is created of the class using the new keyword.
+
+## eval()
+eval() is a built-in function that evaluates a string as a js code and dynamicallly executes it.
+
+```typescript
+let x = 10;
+let y = 20;
+let code = "x + y";
+
+let z= eval(code);
+console.log(z); //30
+```
+
+## XSS(Cross-Site Scripting) attack
+Xss is a security attack when a user/hacker insert some malicious script code in input fields to steal or manipulate content.
+
+# SQL Injection attack
+SQL Injection is a security attack when a user/hacker insert some malicious SQL script code in input fields to steal or manipulate content.
