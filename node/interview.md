@@ -464,3 +464,164 @@ Third-party middleware in Express.js are modules developed by third-party develo
 
 ## What is Routing in Express.js?
 Routing is the process of directing incoming HTTP requests to the appropriate handler function based on the request's method (GET, POST) and the URL path.
+
+## What is the difference b/w middleware & routing in express?
+**Middleware**
+1. Middleware re functions.
+2. Middleware functions can access  the request and response object, then they can:
+a. Perform some actions(logic like authorization).
+b. End the request-response cycle
+c. Call the next middleware function
+
+
+**Routing**
+1. Routing is a process.
+2.  Routing is the process of directing incoming HTTP requests to the appropriate handler functions(GET, PUT, POST/DELETE).
+
+## How to implement routing? How do you define routes in Express.js?
+To implement routing first define routes. In Express.js, routes are defined using the **app.MMETHOD() Functions** (Where METHOD is the HTTP request method(eg. GET, POST, PUT, DELETE) and app is an instance of the express application.)
+
+## How to handle Routing in Express.js real applications?
+1. import express
+2. set middleware
+3. import controller
+4. define routes for different endpoints
+5. start the server
+
+
+## What are Route Handlers?
+Route handler is the second agument passed to app.get() or app.post().
+
+route handler function is used to process the request and generate a response.
+
+```typescript
+
+app.post("/login",(req, res)=>{
+   //handle logic here
+})
+```
+Here **(req, res)** is the route handlers.
+
+## What are Route paramters in express.js?
+Route parameters in Express.js allow you to capture dynamica values from the URL paths.
+Route parameters can be accessed by using **req.params** object.
+
+```typescript
+ app.get("/user/:userId", (req, res)=>{
+   //access the value
+   const userId = req. params.userId;
+   res.send(userId);
+ });
+ ```
+ here **:userId** is Router parameters.
+
+
+ ## What are Router object & Router methods and how to implement them?
+ The rouer object is a mini version of an express application which is used for **handling routes.** Router methods are functions provided by Router object to defeine routes for different HTTP methods(GET, POST, DELETE, etc...).
+
+```typescript
+ //implement router method
+ const express = require("express");
+ const router = express.Router();
+
+ router.get("/",(req, res)=>{});
+
+ module.exports = router
+ ```
+
+ ```typescript
+ //use router method
+ const router = require('./router');
+
+ app.use('/', router);
+
+ ```
+
+ ## What are the types of Router methods?
+
+ 1. router.get(path, callback) 
+ 2. router.post(path, callback)
+ 3. router.put(path, callback)
+ 4. router.delete(path, callback)
+
+ ## What is the difference between app.get() and router.get() method?
+ **app.get()**
+ 1. The app.get() method  is used to define routes **directly on the application object**.
+ 2. Routes defined using app.get() are automatically mounted on the root path(/).
+ 3. Routes defined using app.get() are not modular and cannot reused in other applications.
+
+ **router.get()**
+
+1. The router.get() method is used to define routes on a router object.
+2. Routes defined using router.get() are not automatically mounted; they must be explicitly mounted **using app.use()**
+3. Routes defined using router.get() are modular and can be **reused in other application** by exporting the router object.
+
+## What is express.Router() in Express.js?
+express.Router() is a class in Express.js that returns a new router object.
+
+## Share a real application use of Routing?
+Routing is used for **authenticating** requests based on the token available in request header.
+
+```typescript
+const express = require("express");
+const app = express();
+const router = express.Router();
+
+//route-level middleware for authentication
+const authenticate = (req, res, next)=>{
+    if(req.headers.authorization){
+        next();
+    }else{
+        res.status(401).send('unauthorize');
+    }
+};
+
+router.get('/protected', authenticate, (req, res)=>{
+    res.send('This is a protected route');
+});
+
+```
+
+## What is Route Chaining in express.js?
+
+Route chaining is a process defining **multiple route handlers** for a single route.
+
+```typescript
+const express = require("express");
+const app = express();
+
+fucntion middleware1(req, res, next){
+  console.log("Middleware 1");
+  next();
+}
+
+fucntion middleware2(req, res, next){
+  console.log("Middleware 2");
+  next();
+}
+
+//Route chainaing
+app.get("/route", middleware1, middleware2 , (req, res)=>{
+    console.log("ROute handlers");
+    res.send("Route chaining example");
+});
+
+app.listen(3000, ()=>{
+ console.log(`server is running`)
+});
+```
+
+## What is Route Nesting in Express.js?
+Route nesting organize routes hierarchically by grouping related routes under a common URL prefix. This allows you to create more modular ans structured routes, making you codebase easier to manage and maintain.
+
+example:
+**Route 1**
+www.example.com/users
+www.example.com/users/profile
+
+**Route **
+www.example.com/product
+www.example.com/product/feature
+
+
+
