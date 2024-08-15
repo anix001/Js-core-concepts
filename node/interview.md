@@ -284,7 +284,7 @@ Events repersent actions that can be observed and responded to. Events will call
  The HTTP module can create an HTTP server that listens to serve ports and gives a response back to the client.
 
  ## What is the role createServer() method of http module?
- The createServer() method of the http module in Node.js ia used to create an HTTP server.
+ The createServer() method of the http module in Node.js is used to create an HTTP server.
 
 ```typescript
 //create-server.js
@@ -308,3 +308,159 @@ server.listen(port,()=>{
 
 //Run command in terminal : node creataeServer.js
 ```
+
+
+# Chapter-2
+
+## What are the advantage of using Express.js with Node.js?
+
+1. **Simplified Web Development**: Express.js  provides a lightweight framework that simplifies the process of building web applications in Node.js.
+
+2.**Middleware Support**: Easy integration of middleware functions into applications's request-response cycle.
+
+3. **Flexible Routing System**: Defining routes for  handling different Http methods(GET, POST, PUT, DELETE, etc.)and URL patterns is easy.
+
+4. **Template Engine Integration**: Express.js supports various template engines making it easy to generate dyanamic HTML content on the server side.
+
+## How to create an HTTP server using Express.js?
+
+```typescript
+const express = require('express');
+
+const app = express(); //create an express app
+
+const port = 3000;
+
+app.listen(port,()=>{
+    console.log(`Server is started in port ${port}`);
+});
+```
+
+## What is Middleware in Express.js and When to use them?
+A middleware in Express.js is a function that handles HTTP requests, performs operations, and passes control to next middleware.
+
+## How do you implement middlware in Express.js?
+```typescript
+const express  = require("express");
+const app = express();
+
+//define middleware
+const myMiddleware = (req, res, next)=>{
+    //middleware logic goes here
+    res.send("Interview Happy");
+    next();//calls the next middleware function(callback function)
+};
+
+//use middleware globally for all routes
+app.use(middleware); //Use app.use() to mount myMiddleware glbally, meaning it will be executing for every incoming request to the application.
+const port = 3000;
+
+app.listen(port,()=>{
+    console.log(`Server is started in port ${port}`);
+});
+```
+
+
+## What is the purpose of the app.use() function in Express.js?
+The app.use() method is used to **execute(mount) middleware** functions globally.
+
+## What is the purpose of the next parameter in express.js?
+The next parameter is a callback function which is used to **pass control to the next middleware function** in the stack.
+
+## How to use middleware globally in a specific route?
+Use **app.use('/specificRoute', mymiddleware)** to use middleware globally for a specific route in express.js .
+
+## What is Request pipeline in Express?
+The request pipeline in Express.js  is a series of middleware functions that handle incoming HTTP requests and pass control to the next function.
+
+# chapter- Types of middleware
+
+## What are the types of middleware's in express.js?
+1. Application-Level middleware
+2. Router-level middleware
+3. Error -handling middleware
+4. Built-in middleware
+5. third-party middleware
+
+## What is the difference b/w application-level & route-level middleware?
+Application-level middleware applies globally to all incming requests in the entire Express.js application.
+
+Route-level middleware applies only to specific routes, not for all incoming requests.
+
+## What is error handling middleware and how to implement it?
+Error handling middleware in express.js is a special kind of middleware used to manage errors hapening while handling incoming requests.
+
+To implement error handling in Express, define middleware with four parameters(err, req, res, next). Here the additional **error object parameter** will be used for error handling.
+
+```typescript
+const express = require("express");
+const app = express();
+
+//middleware generating error
+app.use((req, res, next)=>{
+    //simulate an error
+    next(new Error("An error Occurred"));
+});
+
+//Error handling middleware
+app.use((err, req, res, next)=>{
+    console.log(err.stack);
+    res.send(500).send("something went wrong !!");
+});
+
+const port = 3000;
+
+app.listen(port,()=>{
+    console.log(`Server is started in port ${port}`);
+});
+```
+
+## If you have 5 middlewares then in which middleware you will do the error handling?
+In case of multiple middleware, error-handling middleware should be defined at last(after all other middleware's) because when an error occurs, express.js will search for the next error-handling middleware skipping any regukar middeware or route handlers.
+
+## What is built in middleware? How top server static files from Express.js?
+
+ ```typescript
+ 
+const express = require("express");
+const app = express();
+
+//server static files from the 'public' directory
+app.use(express.static("public"));
+
+//other routes and middleware can be defined here
+
+//start the server
+const port = 3000;
+
+app.listen(port,()=>{
+    console.log(`Server is started in port ${port}`);
+});
+```
+
+Built-in  middleware's are built in functions inside Express framework which provides common functionalities.
+
+**express.static()**  middleware is used for serving static files.
+
+## What are third-party middlewares? Give some exmple
+helmet, compression, etc.
+
+Third-party middleware in Express.js are modules developed by third-party developers.
+
+
+## What are the advantages of using middleware in express.js?
+
+
+1. **Modularity**: Middleware allows you to modularize you application's functionality into **small, self-contained units**. each middleware functions can handle a specific task or concern, such as logging, authentication, or error handling.
+
+2. **Reusability**: Middlewares can be reused at **multiple places and thet makes application code easier to maintain.
+
+3. **Improved Request Handling**: Middleware functions have access to both request(req) and respose(res) objects which enables you to perform **validations on request** or modify the response before sending it back to the client.
+
+4. **Flexible Control Flow**: Middleware functions can be applied globally to all routes or selectively to apecific routes, allowing you to control the flow of request processing in your application.
+
+5. **Third-party middleware's**: Express.js offers a wide range of third-party middleware packages that provide additional functionality. for ex: cors, etc.
+
+
+## What is Routing in Express.js?
+Routing is the process of directing incoming HTTP requests to the appropriate handler function based on the request's method (GET, POST) and the URL path.
