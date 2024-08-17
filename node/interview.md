@@ -624,4 +624,387 @@ www.example.com/product
 www.example.com/product/feature
 
 
+## How to implement route nesting inExpress.js?
+```typescript
+//userRouter.js
+const express = require("express");
+const userRouter = express.Router();
 
+//Route 1: www.example.com/users
+userRouter.get("/", (req, res)=>{
+ res.send("Users Home page");
+});
+
+//Route 2: www.example.com/users/profile
+userRouter.get("/profile",(req, res)=>{
+    res.send("User Profile page");
+});
+
+module.exports = usersRouter;
+```
+
+```typescript
+//productsRouter.js
+const express = require("express");
+const productsRouter = express.Router();
+
+//Router 1: www.example.com/products
+//Router 2: www.example.com/products/features
+//Router 3: www.example.com/products/ratings
+
+module.exports = productsRouter;
+```
+
+```typescript
+//app.js
+const express = require("express");
+const app = express();
+
+//Import routers
+const userRouter = require("./usersRouter");
+const productsRouter = require("./productsRouter");
+
+//Mount routers
+app.use("/users", userRouter);
+app.use("/products", productsRouter);
+
+//Start the server
+app.listen(3000, ()=>{
+    console.log("Server is running on port 3000");
+});
+```
+
+# Chapter- Express -Template Engines
+
+## What are Template Engines in Express.js?
+Template engines are libraries that enable developers to **generate dynamic HTML content** by combining static HTML templates with data.
+
+## name some Template Engines libraries?
+1. EJS(Embedded Javascript)
+2. Handlebars
+3. Pug (formerly jade)
+4. Mustache
+5. Nunjucks
+
+## How to implement EJS templating engine in a express.js application?
+1. npm install ejs
+2. create a folder named views and create index.ejs
+
+```typescript
+<!--index.ejs-->
+<html lang="en">
+    <head>
+      <title>EJS Example</title>
+    </head>
+    <body>
+    <h1> <%= title%></h1>
+    <p>Static HTML Template</p>
+    </body>
+</html>
+```
+
+```typescript
+//server.js
+const express = require("express");
+const app = express();
+const path = require('path');
+
+//Set the view engine to EJS
+app.set("view engine", 'ejs');
+
+//set the views directory
+app.set('views', path.joins(__dirname, 'views'));
+
+// Route to render the index.ejs template
+app.get('/', (req, res)=>{
+    res.render('index', { title: 'Node.js with EJS'});
+});
+
+app.listen(3000, ()=>{
+ console.log(`server is running`)
+});
+```
+
+
+## How to implement  EJS templating engine in a Express.js application?
+1. install EJS: npm install ejs.
+2. create html template file index.ejs
+3. create server file and set the view engine to EJS.
+4. specify the views directory
+5. Render EJS templates **using res.render() method**
+
+
+## What is REST & RESTFUL API?
+REST(Representational State Transfer) is an **architectural style** for designing networked applicatons(REST is a set of guidelines for creating API's).
+
+RESTFUL API is a service which follow REST principles/guidelines.
+
+## What are HTTP Request and Response structures in UI and REST API?
+An HTTP(Hypertext Transfer protocol) request is a message sent by a client(such as a web browser or a mobile app) to a server, requsting a particular action or resource.
+It contains HTTP Action(GET, POST,....), URL, Request Body, Request Header.
+
+An HTTP response is a message sent by a server back to the client in response to an HTTP requet.It includes status code, content type, content.
+
+## What are Top 5 RESt guidelines and the advantages of them?
+1. **Separation of client and server**: The implementation of the client and the server must  be done independtly.
+  **Advantage**: Independece allows easier maintenance, scalability, and evolution
+
+2. Stateless: The server will not store anything above the latest HTTP request the client made.
+**Advanatge**: It will treat every erquest as new request. It simplifies server implementation as it is not overoading it.
+
+3. Uniform interface: Identofy theresource by URL(e.g, www.abc.com/api/question)
+**Advantage**: Standardized URLs, making it easy to understand and use the API.
+
+4. Cacheable:The API response should be cachable toimprove the peformance.
+**Advantage**: Caching API responses improves performance by reducing the need for repeated requests to the server.
+
+5. Layered system (mvc): The system should follow layered pattern.
+**Advantage**: A layered system, such as MVC pattern, promotes modular design and seperation of concerns.
+
+## What is the difference b/w REST API and SOAP API?
+
+**REST**
+1. REST is an architectural style.
+2. Uses HTTP or HTTPS.
+3. Uses lightweight formats like JSON, XML.
+4. Statless
+5. Relies on HTTP status codes.
+6. Generally lightweight and faster.
+
+**SOAP API**
+1. SOAP (Simple Object Access Protocol) is a protocol.
+2. Can  use various protocols(HTTP, SMTP.etc).
+3. Typically uses XML.
+4. Can be stateful or stateless.
+5. Defines its own fault mechanism.
+6. Can be slower due to XML processing.
+
+
+## What are HTTP verbs and HTTP methods? v.imp
+Http methods also known as HTTP verbs, are a set of actions that can take on a resource.
+
+GET, POST, PUT, DELETE, PATCH
+
+
+## What are GET,POST, PUT & DELETE HTTP methods?
+1. **GET**: Retrive data from a specified resource.
+2. **POST**: Submit data to be processed.
+3. **PUT**: Update a resource or create a new rsource if it does not exist.
+4. **DELETE**: Request removal of a resource.
+
+
+## What is the difference between PUT & PATCH methods?
+Both PUT and PATCH methods are used to  update a resource by replacing the resource with new data provide in the request.
+
+In put request, the client sends the full updated resource in the requestbody, replacing the existing resource on the server.
+
+In a PATCH request, the client sends specific change or instruction for modifying resource, updating only certain fields without resending the entire resource. 
+
+## Explain the concept of Idempotence in RESTful APIs.
+Idempotence meaning performing an operation multiple times should have the same outcome as performing it once.
+
+**Idempotent Methods**
+1. GET
+2. PUT
+3. DELETE
+
+**Non-Idempotent Methods**
+1. POST
+
+## What are the role of satus codes in RestFul APIs?
+Status codes are used to convey the results of a client's request.
+
+**1xx(info)**
+1. 100:Continue
+
+**2XX(Success)**
+1. 200: OK
+2. 201: Created
+3. 202: Accepted
+4. 204: No content
+
+**3xx(resirection)**
+1. 300: Multiple Choices
+
+**4xx(Client Error)**
+1. 400:Bad Reuest
+2. 401: unauthorized
+3. 403: Forbidden
+4. 404: Not Found
+
+**5XX(Server Error)**
+1. 500: Internal Server Error
+2. 501:Not Implemented
+3. 502: Bad Gateway
+4. 503: Service unavailable
+
+## What is CORS in Restful APIs?
+CORS(Cross-Origin Resource sharing) is a security feature implemente in web browser that  restrict web pages or script from making requests to a different domain than the one that served the web page.
+
+## How to remove CORS restrictions Restful APIs?
+
+```typescript
+const express = require('expresss');
+const cores = require('cors');
+
+const app = express();
+//Enable CORS Middleare for all routes
+app.use(cors());
+
+//Optionally , configure CORS to allow requests from specific origins
+app.use(cors({
+    origin:'http://example.com'
+}));
+```
+
+## What are Serialization & Deserialization?
+Serilization is the process of **converting an object** into a format that can be stores, transmitted, or reconstructed later.
+
+
+Deserializable is the process of converting serialized data, such as binary/XML/json data, back into an object.
+
+**types of searialization**
+1. Binary serialization
+2. XML Serialization
+3. JSON Serialization
+
+
+## How to Serialize & Deserialize in Node js?
+Serialize a js object into Json Format using JSON format using **JSON.stringify()**.
+
+```typescript
+//serialization (to JSON)
+const obj = { name: "Happy", age:39};
+
+const jsonStr = JSON.stringify(obj);
+```
+
+Deserialize a JSON String into a Javascript object using  **JSON.parse()** .
+
+```typescript
+const hspnStr2 = '{"name":"Happy", "age":39}';
+
+const obj =JSON.parse(jsonStr2);
+```
+
+## Explain the concept of versioning in RESTful APIs. 
+versioning in RESTful  APIs refres to the practice of **maintining multiple versions of an API to support backward compatibility.
+
+```typescript
+https://api.example.com/v1/resource
+https://api.example.com/v2/resource
+https://api.example.com/v3/resource
+```
+
+## What is an API document? What are the popular documentation formats?
+An API document describe the functionality, features, and usage of REST API.
+
+**REST API DOCUMNEtation formats**
+1. Swagger(OpenAPI)
+2. API Blueprint 
+3. RAML
+
+## What is the tyical structure od a REST API project in Node?
+1. node_modules: Directory where npm packages are installed.
+2. src: SOurce code directory
+a. controllers: contains files responsible for handling business logic
+b. routes: Defines API routes
+c. utils: Contains reusable functions used across the project.
+d. models: defines data models.
+e.app.js: initializes and configure the express app. conatains routes, middleware, and other configurations.
+
+3. .gitignore: A file that specifies files and directories to be  ignored by version control(e.g: node_modules, *.log)
+
+4. package.json: the file that contains metadata abaout the project and its dependencies.
+
+ ## What are Authentication and Authorization?
+ Authentication is the process of verifying the identity of a user by validating thei credentials such as username and password.
+
+ Authorization is the process of allowing an authenticated user access to resources. Authentication is always preceds to Authorization.
+
+ **types of authentication**
+ 1. Basic(Username and Password) authentication
+ 2. API Key Authentication
+ 3. Token based Authentication(JWT)
+ 4. Multi-factor Authentication(MFA)
+ 5. Certificate-based Authentication
+
+## What is Basic Authentication?
+In basic  authentication, the user passes their  credentials on a post request. At  the Node Rest API end, credentials are verifies, and response is sent back.
+
+
+## What is the role of hashing and salt in securing password?
+Hashing is a process of converting a password into a fixed size string of characters using a mathematical algorithm.
+
+## How can we create Hash Password in Node.js?
+```typescript
+const crypto = require("crypto");
+
+// Define  a funcrion to hash and salt a password
+function hashAnd SaltPassword(password){
+     //1.  Generate a random salt
+    const salt = crypto.randomBytes(16).toString("hex");
+
+    //2. Create a hash object using SHA-256
+    const hash = crypto .createHash("sha256");
+    
+    //3. Update the hash object with the salt and password
+    hash.update(salt + password);
+
+    //4. Get the hashed data in a hexadecimal string
+    cinst hexHash = hash.digest("hex")
+
+    //5. return the salt and hashed password as a string
+
+    retun  salt + "." + hexHash;
+
+}
+```
+
+## What is API Key Authentication?
+In API Key authentication, the API owner will share an API key with thw users and this key will  authenticate the user of that API. The disadvantage of it is, API Keys can be shared or stolen threfore it may not be suitable for all scenarios.
+
+
+## What are the parts of JWT token?
+ 1. HEader: contains info about type of token
+ 2. payload: contains CLAIMS
+ 3. Signature: is a string that is used to ensure the INtEGRITY of the token and verify that it has not been tampered with.
+
+ ## How can you debug Node.js application?
+ **Debugging technique in Node.js**
+ 1. console.log()
+ 2. debugger statement
+ 3. Node.js inspector
+ 4. vs code debugger
+ 5. chrome devtools
+
+ ## Error-First Callback in Node.js
+
+Error-First Callback in Node.js is a function which either returns an error object or any successful data returned by the function.
+
+1. The first argument in the function is reserved for the error object. If any error has occurred during the execution of the function, it will be returned by the first argument
+.
+2. The second argument of the callback function is reserved for any successful data returned by the function. If no error occurred then the error object will be set to null.
+
+```typescript
+const fs = require("fs");
+
+// This file does not exists
+const file = "file.txt";
+
+// Error first callback
+// function with two
+// arguments error and data
+const ErrorFirstCallback = (err, data) => {
+if (err) {
+	return console.log(err);
+}
+console.log("Function successfully executed");
+};
+
+// function execution
+// This will return
+// error because file do
+// not exist
+fs.readFile(file, ErrorFirstCallback);
+```
